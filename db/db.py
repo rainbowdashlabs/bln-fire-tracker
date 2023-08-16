@@ -22,12 +22,13 @@ class Configuration(BaseModel):
 
 config_path = Path("config/database.json")
 if not config_path.exists():
-    config_path.parent.mkdir(parents=True)
-    config_path.open("w").write(Configuration().model_dump_json(indent=2))
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    with config_path.open("w") as f :
+        f.write(Configuration().model_dump_json(indent=2))
 
 config = Configuration(**json.loads(config_path.open("r").read()))
-
-print(config.model_dump_json())
+with config_path.open("w") as f:
+    f.write(config.model_dump_json(indent=2))
 
 
 @contextlib.contextmanager
