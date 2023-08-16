@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=root
+    profiles:
+      - dev
+  dev:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./config:/config
+    profiles:
+      - dev
+    depends_on:
+      - postgres
