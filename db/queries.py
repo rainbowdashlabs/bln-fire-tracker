@@ -28,7 +28,7 @@ def last_nums() -> Tuple[int, int, int] | None:
        technical_assistance,
        rescue_service
     FROM daily_calls
-    WHERE day = now()::DATE
+    WHERE day = (now() AT TIME ZONE 'Europe/Berlin')::DATE
     LIMIT 1;"""
     cur: db.pg_cursor
     with cursor() as cur:
