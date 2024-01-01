@@ -67,7 +67,6 @@ def last_day() -> Tuple[int, int, int] | None:
         fire_tracker.daily_calls
     WHERE
               DAY = ( now() AT TIME ZONE 'Europe/Berlin')::DATE - '1 DAY'::INTERVAL
-    END
     LIMIT 1;"""
     cur: db.pg_cursor
     with cursor() as cur:
