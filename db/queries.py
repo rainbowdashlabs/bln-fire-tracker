@@ -42,13 +42,13 @@ def last_nums() -> Tuple[int, int, int] | None:
         rescue_service
     FROM
         fire_tracker.daily_calls
-    WHERE CASE
+    WHERE day = CASE
               WHEN date_trunc('Minutes', now() AT TIME ZONE 'Europe/Berlin') =
                   date_trunc('day', now() AT TIME ZONE 'Europe/Berlin')
                   THEN -- The new day does not start at midnight, but one minute after it
-              DAY = ( now() AT TIME ZONE 'Europe/Berlin' - '1 MINUTE'::INTERVAL )::DATE
+              ( now() AT TIME ZONE 'Europe/Berlin' - '1 MINUTE'::INTERVAL )::DATE
               ELSE
-                  DAY = (now() AT TIME ZONE 'Europe/Berlin')::DATE
+                   (now() AT TIME ZONE 'Europe/Berlin')::DATE
     END
     LIMIT 1;"""
     cur: db.pg_cursor
