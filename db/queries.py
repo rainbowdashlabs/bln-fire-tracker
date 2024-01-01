@@ -18,11 +18,11 @@ def log_numbers(fires: int, technical: int, rescue: int):
     if last:
         ld_fire, ld_technical, ld_rescue = last_d
     d_fires, d_technical, d_rescue = fires - o_fire, technical - o_technical, rescue - o_rescue
-    if d_fires < 0:
+    if d_fires < -5:
         d_fires = fires - ld_fire
-    if d_technical < 0:
+    if d_technical < -5:
         d_technical = technical - ld_technical
-    if d_rescue < 0:
+    if d_rescue < -5:
         d_rescue = rescue - ld_rescue
     log.info("Saved to db")
     with cursor() as cur:
@@ -31,7 +31,7 @@ def log_numbers(fires: int, technical: int, rescue: int):
             INTO calls(fires, technical_assistance, rescue_service)
             VALUES (%s, %s, %s)
             ON CONFLICT DO NOTHING"""
-        cur.execute(query, [d_fires, d_technical, d_rescue])
+        cur.execute(query, [max(d_fires,0), max(d_technical,0), max(0,d_rescue)])
 
 
 def last_nums() -> Tuple[int, int, int] | None:
