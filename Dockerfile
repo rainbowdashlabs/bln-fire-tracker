@@ -22,6 +22,7 @@ FROM base AS runtime
 
 COPY --from=python-deps /.venv /.venv
 ENV PATH="/.venv/bin:$PATH"
+ENV LOG_FORMAT=json
 COPY . .
 
 EXPOSE 80
